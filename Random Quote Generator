@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer-Nihal</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: poppins;
+}
+body{
+    background: #9c89fa;
+}
+.quote-box{
+    background: #fff;
+    width: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.68);
+}
+.quote-box h2{
+    font-size: 30px;
+    margin-bottom: 40;
+    position: relative;
+}
+.quote-box h2::after{
+    content: '';
+    width: 170px;
+    height: 5px;
+    background-color: blue;
+    border-radius: 3px;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%); /*blue waali line ko center m krne k liye*/
+}
+.quote-box blockquote{
+    font-size: 20px;
+    min-height: 80px;
+}
+.quote-box blockquote::before, .quote-box blockquote::after{
+    content: '"';
+}
+.quote-box span{
+    display: block;
+    margin-top: 10px;
+    float: right;
+    position: relative;
+}
+.quote-box span::before{
+    content: '';
+    width: 27px;
+    height: 2px;
+    background: rgb(8, 69, 53);
+    position: absolute;
+    top: 50%;
+    left: -30px;
+}
+.quote-box div{
+    width: 100%;
+    margin-top: 50px;
+    display:flex;
+    justify-content: space-evenly;
+}
+.quote-box button{
+    background-color: rgb(15, 107, 220);
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid rgba(23, 124, 229);
+    width: 150px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.quote-box button img{
+    height: 30px;
+    margin-right: 10px;
+}
+#insta:hover{
+    background-color: #fff;
+    color: rgba(0, 0, 0);
+}
+</style>
+<body>
+    <div class="quote-box">
+        <h2>Quote Of The Day</h2>
+        <blockquote id="quote">Loading...</blockquote>
+        <span id="author">authorname...</span>
+        <div>
+            <button id onclick="getquote(api_url)">New Quote</button>
+            <button id="insta" onclick="instashare()"><img src="https://abs.twimg.com/errors/logo46x38.png" alt="">Twitter</button>
+        </div>
+    </div>
+    <script>
+        const quote = document.getElementById('quote');
+        const author= document.getElementById('author');
+        const api_url = "https://api.quotable.io/random"; 
+        async function getquote(url){
+            const response = await fetch(url);
+            var data = await response.json();//json is used for storing and transporting data
+            //console.log(data); ---->> referebnce k liye tha author aur content
+
+            quote.innerHTML=data.content; //content console m se miljaega
+            author.innerHTML=data.author;//author bhi console m se miljaega
+        }
+        getquote(api_url);
+
+        function instashare(){
+            window.open("https://twitter.com/intent/tweet?text="+quote.innerHTML);
+        }
+    </script>
+</body>
+</html>
